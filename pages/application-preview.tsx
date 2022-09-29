@@ -2,7 +2,7 @@
 import type { NextPage } from 'next';
 import { useRef } from 'react';
 import {
-  ApplicationRequestForm,
+  ApplicationPreviewComponent,
 } from '../components';
 import Layout from './layout';
 
@@ -11,7 +11,7 @@ const Home: NextPage = () => {
 
   return (
     <Layout>
-        <ApplicationRequestForm />
+        <ApplicationPreviewComponent />
     </Layout>
   );
 };
