@@ -58,7 +58,7 @@ export const RentalHistoryForm = () => {
 
   useEffect(() => {
     onLocationChange({ target: { name: 'country', value: 'Nigeria' } });
-  }, []);
+  }, [onLocationChange]);
 
   return (
     <FormContainer>
