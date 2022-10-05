@@ -11,7 +11,6 @@ import {
   CountryInterface,
   StateInterface,
   RentalHistoryInput,
-  RentCycle,
 } from '../../interface';
 
 export const RentalHistoryForm = () => {
@@ -56,9 +55,9 @@ export const RentalHistoryForm = () => {
     });
   };
 
-  useEffect(() => {
-    onLocationChange({ target: { name: 'country', value: 'Nigeria' } });
-  }, [onLocationChange]);
+  // useEffect(() => {
+  //   onLocationChange({ target: { name: 'country', value: 'Nigeria' } });
+  // }, [cities, onLocationChange, states]);
 
   return (
     <FormContainer>
@@ -70,7 +69,8 @@ export const RentalHistoryForm = () => {
           default="Nigeria"
           name="rentalAddress.country"
           options={countries}
-          onChange={onLocationChange}
+          handleChange={onLocationChange}
+          validationLabel="rentalAddress.country"
         />
       </InputWrapper>
       <InputWrapper>
@@ -78,9 +78,10 @@ export const RentalHistoryForm = () => {
           handleChange={onInputChange}
           value={formInput?.rentalAddress?.line}
           bordered
-          placeholder="Line1"
+          placeholder="line"
           marginRight="10"
-          name="rentalAddress.line1"
+          name="rentalAddress.line"
+          validationLabel="rentalAddress.line"
         />
         <InputComponent
           handleChange={onInputChange}
@@ -88,11 +89,12 @@ export const RentalHistoryForm = () => {
           bordered
           placeholder="Line2"
           name="rentalAddress.line2"
+          validationLabel="rentalAddress.line2"
         />
       </InputWrapper>
       <InputWrapper>
         <Select
-          onChange={onLocationChange}
+          handleChange={onLocationChange}
           options={states}
           marginRight="10"
           width="50"
@@ -100,7 +102,7 @@ export const RentalHistoryForm = () => {
           name="rentalAddress.state"
         />
         <Select
-          onChange={onLocationChange}
+          handleChange={onLocationChange}
           default="Cities"
           marginRight="10"
           name="rentalAddress.city"
@@ -108,10 +110,13 @@ export const RentalHistoryForm = () => {
           options={cities}
         />
         <InputComponent
-          name="rentalAddress.zipCode"
+        handleChange={onLocationChange}
+          name="rentalAddress.zip"
           width="20"
           bordered
           placeholder="Zip code"
+          validationLabel="rentalHistory.rentalAddress.zip"
+          value={formInput?.rentalAddress?.zip}
         />
       </InputWrapper>
       <InputWrapper>
@@ -124,6 +129,7 @@ export const RentalHistoryForm = () => {
           handleChange={onInputChange}
           value={formInput?.startDate}
           name="startDate"
+          validationLabel="rentalHistory.startDate"
         />
         <InputComponent
           handleChange={onInputChange}
@@ -133,6 +139,7 @@ export const RentalHistoryForm = () => {
           placeholder="MM/DD/YYY"
           value={formInput?.endDate}
           name="endDate"
+          validationLabel="rentalHistory.endDate"
         />
       </InputWrapper>
       <InputWrapper>
@@ -143,6 +150,7 @@ export const RentalHistoryForm = () => {
           placeholder="$0.00"
           label="rent"
           name="rent"
+          validationLabel="rentalHistory.rent"
         />
       </InputWrapper>
       <InputWrapper>
@@ -153,6 +161,7 @@ export const RentalHistoryForm = () => {
           handleChange={onInputChange}
           value={formInput?.rentCurrency}
           name="rentCurrency"
+          validationLabel="rentalHistory.rentCurrency"
         />
       </InputWrapper>
       <InputWrapper>
@@ -162,10 +171,18 @@ export const RentalHistoryForm = () => {
           label="Reason for leaving"
           value={formInput?.reasonForLeaving}
           name="reasonForLeaving"
+          validationLabel="rentalHistory.reasonForLeaving"
         />
       </InputWrapper>
       <InputWrapper>
-        <Select options={rentCycleData} label="Rent cycle" />
+        <Select
+          handleChange={onInputChange}
+          options={rentCycleData}
+          label="Rent cycle"
+          default={rentCycleData[0].name}
+          name="rentCycle"
+          validationLabel="rentalHistory.rentCycle"
+        />
       </InputWrapper>
       <InputWrapper>
         <InputComponent
@@ -175,12 +192,16 @@ export const RentalHistoryForm = () => {
           marginRight="10"
           handleChange={onInputChange}
           name="rentalOwner.firstName"
+          validationLabel="rentalOwner.firstName"
+          value={formInput.rentalOwner?.firstName}
         />
         <InputComponent
           bordered
           placeholder="Lastname"
           handleChange={onInputChange}
           name="rentalOwner.lastName"
+          validationLabel="rentalOwner.lastName"
+          value={formInput.rentalOwner?.lastName}
         />
       </InputWrapper>
       <InputWrapper>
@@ -189,6 +210,18 @@ export const RentalHistoryForm = () => {
           label="Rental owner email"
           handleChange={onInputChange}
           name="rentalOwner.email"
+          validationLabel="rentalOwner.email"
+          value={formInput.rentalOwner?.email}
+        />
+      </InputWrapper>
+      <InputWrapper>
+        <InputComponent
+          bordered
+          label="Rental owner phone"
+          handleChange={onInputChange}
+          name="rentalOwner.phone"
+          validationLabel="rentalOwner.phone"
+          value={formInput.rentalOwner?.phone}
         />
       </InputWrapper>
       <SectionDemacator />

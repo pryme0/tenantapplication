@@ -1,0 +1,19 @@
+mutation createApplication($args: CreateApplicationInput!) {
+  rental {
+	createApplication(input: $args){
+    id
+    applicantId
+      applicant{
+    rentalHistory{
+      startDate
+      rent
+      rentalOwner{
+        Phone
+        lastName
+        firstName
+      }
+    }
+  }
+  }
+}
+}

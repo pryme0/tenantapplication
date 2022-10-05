@@ -4,6 +4,7 @@ import { FormContext } from '../../context';
 import { ApplicationTermsInput } from '../../interface';
 import { HeaderComponent, InputComponent } from '../common';
 import _ from 'lodash';
+import { inputChangeEvent } from '../../utils';
 
 export const TermsComponent = () => {
 
@@ -18,16 +19,24 @@ export const TermsComponent = () => {
     setCheckButton(!checkButton)
   }
 
-  const onInputChange = (e) => {
-    const checkNested = e.target.name.split('.');
-    const baseObject = formInput;
-    if (checkNested.length > 1) {
-      const updateNestedValue = _.set(baseObject, checkNested, e.target.value);
-      setFormInput(updateNestedValue);
-      return updateFormData('terms', formInput);
+  const onInputChange = (event) => {
+    console.log('change')
+    if(event.target.name === 'agreed' && event.target.value === 'on' ){
+      event.target.value = true
     }
-    setFormInput({ ...formInput, [e.target.name]: e.target.value });
-   return updateFormData('terms', formInput);
+
+    if(event.target.name === 'agreed' && event.target.value === 'off' ){
+      event.target.value = false
+    }
+
+
+    inputChangeEvent({
+      event,
+      formInput,
+      setFormInput,
+      updateFormData,
+      baseField: 'terms',
+    });
   };
 
   return (
@@ -43,11 +52,11 @@ export const TermsComponent = () => {
         above.
       </TermsText>
       <InputWrapper>
-        <RadioButton onClick={toggleCheck} checked={checkButton} onChange={onInputChange} name="agreedTo" type="radio" />
+        <RadioButton onClick={toggleCheck} checked={checkButton} onChange={onInputChange} name="agreed" type="radio" />
         <RadioButtonLabel>Agreed to</RadioButtonLabel>
       </InputWrapper>
       <InputWrapper>
-        <InputComponent handleChange={onInputChange} name='agreedBy' label="Agreed by" placeholder="Agreed by" bordered />
+        <InputComponent value={formInput.agreedBy} validationLabel="terms.agreedBy" handleChange={onInputChange} name='agreedBy' label="Agreed by" placeholder="Agreed by" bordered />
       </InputWrapper>
 
       <TermsText>

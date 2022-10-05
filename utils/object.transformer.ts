@@ -9,10 +9,6 @@ export const inputChangeEvent = (payload: changeEventInterface) => {
   const checkNested = payload.event.target.name.split('.');
   const baseObject = payload.formInput;
   if (checkNested.length > 1) {
-    payload.setFormInput({
-      ...payload.formInput,
-      [payload.event.target.name]: payload.event.target.value,
-    });
     const updateNestedValue = _.set(
       baseObject,
       checkNested,
@@ -20,14 +16,16 @@ export const inputChangeEvent = (payload: changeEventInterface) => {
     );
     payload.setFormInput(updateNestedValue);
     return payload.updateFormData(payload.baseField, updateNestedValue);
+  }else{
+    const udateValue = _.set(
+      baseObject,
+      [payload.event.target.name],
+      payload.event.target.value,
+    );
+    payload.setFormInput(udateValue);
+   return payload.updateFormData(payload.baseField, udateValue);
   }
-  const udateValue = _.set(
-    baseObject,
-    [payload.event.target.name],
-    payload.event.target.value,
-  );
-  payload.setFormInput(udateValue);
-  payload.updateFormData(payload.baseField, udateValue);
+ 
 };
 
 export const onLocationChangeEvent = async (

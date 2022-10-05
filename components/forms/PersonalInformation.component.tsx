@@ -19,12 +19,24 @@ export const PersonalInformationForm = () => {
     useContext(CountryContext);
 
   const onInputChange = (event) => {
-    inputChangeEvent({ event, formInput, setFormInput, updateFormData, baseField:"" });
+    inputChangeEvent({
+      event,
+      formInput,
+      setFormInput,
+      updateFormData,
+      baseField: '',
+    });
   };
 
   const onLocationChange = useCallback(
     async (event) => {
-      inputChangeEvent({ event, formInput, setFormInput, updateFormData, baseField:"" });
+      inputChangeEvent({
+        event,
+        formInput,
+        setFormInput,
+        updateFormData,
+        baseField: '',
+      });
       onLocationChangeEvent({
         event,
         country,
@@ -32,15 +44,24 @@ export const PersonalInformationForm = () => {
         updateUserCities,
         setStates,
         setCities,
-        setCountry
+        setCountry,
       });
     },
-    [country, setCountry,setCities,setStates, formInput, updateFormData, updateUserCities, updateUserState],
+    [
+      country,
+      setCountry,
+      setCities,
+      setStates,
+      formInput,
+      updateFormData,
+      updateUserCities,
+      updateUserState,
+    ],
   );
 
-  useEffect(() => {
-    onLocationChange({ target: { name: 'country', value: 'Nigeria' } });
-  }, []);
+  // useEffect(() => {
+  //   onLocationChange({ target: { name: 'country', value: 'Nigeria' } });
+  // }, []);
 
   return (
     <Container>
@@ -56,6 +77,7 @@ export const PersonalInformationForm = () => {
             name="firstName"
             value={formInput.firstName}
             handleChange={onInputChange}
+            validationLabel="firstName"
           />
           <InputComponent
             value={formInput.lastName}
@@ -64,6 +86,7 @@ export const PersonalInformationForm = () => {
             placeholder="Lastname"
             required
             handleChange={onInputChange}
+            validationLabel="lastName"
           />
         </InputWrapper>
 
@@ -73,21 +96,22 @@ export const PersonalInformationForm = () => {
             label="Applicant current address"
             options={countries}
             default={'Nigeria'}
-            onChange={onLocationChange}
+            handleChange={onLocationChange}
           />
         </InputWrapper>
         <InputWrapper>
-        <InputComponent
-          showDate
-          bordered
-          width='50'
-          label="Date of birth *"
-          placeholder="MM/DD/YYY"
-          marginRight="10"
-          handleChange={onInputChange}
-          value={formInput?.dateOfBirth}
-          name="dateOfBirth"
-        />
+          <InputComponent
+            showDate
+            bordered
+            width="50"
+            label="Date of birth *"
+            placeholder="MM/DD/YYY"
+            marginRight="10"
+            handleChange={onInputChange}
+            value={formInput?.dateOfBirth}
+            name="dateOfBirth"
+            validationLabel="dateOfBirth"
+          />
         </InputWrapper>
         <InputWrapper>
           <Select
@@ -96,34 +120,40 @@ export const PersonalInformationForm = () => {
             options={states}
             marginRight="10"
             default="State"
-            onChange={onLocationChange}
+            handleChange={onLocationChange}
+            validationLabel="currentAddress.state"
           />
           <Select
-            name="address.city"
-            onChange={onLocationChange}
+            name="currentAddress.city"
+            handleChange={onLocationChange}
             marginRight="10"
             width="30"
             default="City"
             options={cities}
+            validationLabel="currentAddress.city"
           />
           <InputComponent
-            name="currentAddress.postalCode"
+            name="currentAddress.zip"
             bordered
             placeholder="Zip code"
             width="20"
             required
             handleChange={onInputChange}
+            validationLabel="currentAddress.zip"
+            value={formInput.currentAddress.zip}
           />
         </InputWrapper>
 
         <InputWrapper>
           <InputComponent
-            name="currentAddress.line1"
+            name="currentAddress.line"
             bordered
-            placeholder="line 1"
+            placeholder="line"
             required
             handleChange={onInputChange}
             marginRight="10"
+            validationLabel="currentAddress.line"
+            value={formInput.currentAddress.line}
           />
           <InputComponent
             name="currentAddress.line2"
@@ -131,6 +161,8 @@ export const PersonalInformationForm = () => {
             placeholder="line 2"
             required
             handleChange={onInputChange}
+            validationLabel="currentAddress.line2"
+            value={formInput.currentAddress.line2}
           />
         </InputWrapper>
         <InputWrapper>
@@ -142,6 +174,7 @@ export const PersonalInformationForm = () => {
             name="email"
             handleChange={onInputChange}
             value={formInput.email}
+            validationLabel="email"
           />
         </InputWrapper>
         <InputWrapper>
@@ -153,6 +186,7 @@ export const PersonalInformationForm = () => {
             name="phone"
             handleChange={onInputChange}
             value={formInput.phone}
+            validationLabel="phone"
           />
         </InputWrapper>
         <InputWrapper>
@@ -168,6 +202,7 @@ export const PersonalInformationForm = () => {
             name="nationalId"
             value={formInput.nationalId}
             handleChange={onInputChange}
+            validationLabel="nationalId"
           />
         </InputWrapper>
       </Container>

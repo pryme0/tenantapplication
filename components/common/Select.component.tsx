@@ -1,11 +1,18 @@
-import React from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { StyledLabel } from './Input.component';
 import { SelectInterface, ContainerInterface } from '../../interface';
-import { FaCalendarAlt  } from 'react-icons/fa';
+import { FormContext } from '../../context';
+import { WarningTextContainer, WarningText } from './Input.component';
 
 export const Select = (props: SelectInterface) => {
   const { options } = props;
+  const { inputError } = useContext(FormContext);
+  const [errors, setErrors] = useState(inputError);
+
+  useEffect(() => {
+    setErrors(inputError);
+  }, [errors, inputError]);
 
   return (
     <InputContainer
@@ -14,17 +21,23 @@ export const Select = (props: SelectInterface) => {
       width={props?.width}
     >
       <StyledLabel>{props.label}</StyledLabel>
-      <StyledSelect
-        onChange={props?.onChange}
-        name={props?.name}
-      >
-      <option value={props?.default} >{props?.default}</option>
+      <StyledSelect onChange={props?.handleChange} name={props?.name}>
+        <option value={props?.default}>{props?.default}</option>
         {options?.map((option, index) => (
-          <StyledOption key={index} value={option?.name }>
-            {option.name }
+          <StyledOption key={index} value={option?.name}>
+            {option.name}
           </StyledOption>
         ))}
       </StyledSelect>
+      <WarningTextContainer>
+        {
+          errors &&(
+              errors?.map((error)=>(
+                error?.path === props?.validationLabel?(<WarningText>{error?.message}</WarningText>):(<WarningText> </WarningText>)
+              ))
+          )
+        }
+      </WarningTextContainer>
     </InputContainer>
   );
 };
@@ -47,7 +60,6 @@ const InputContainer = styled.div`
 
 const StyledSelect = styled.select`
   display: inline-block;
-  margin-bottom: 25px;
   padding: 10px 20px;
   vertical-align: baseline;
   border: 1px solid #cdcdcd;
@@ -65,11 +77,11 @@ const StyledSelect = styled.select`
 `;
 
 const StyledOption = styled.option`
-color: #767676;
-background: white;
-font-weight: small;
-display: flex;
-white-space: pre;
-min-height: 20px;
-padding: 0px 2px 2px;
+  color: #767676;
+  background: white;
+  font-weight: small;
+  display: flex;
+  white-space: pre;
+  min-height: 20px;
+  padding: 0px 2px 2px;
 `;

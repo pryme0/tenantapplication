@@ -1,54 +1,109 @@
 import React, { useEffect, useState, useContext } from 'react';
 import styled from 'styled-components';
 import { Button } from './common';
+import { gql, useMutation } from '@apollo/client';
 import { useRouter } from 'next/router';
 import { FormContext } from '../context';
-import * as yup from "yup";
 import { applicationSchema } from './validation.schema';
+import client from '../apollo-client';
+import { FaSpinner } from 'react-icons/fa';
+import {
+  NotificationContainer,
+  NotificationManager,
+} from 'react-notifications';
 
 export const FooterComponent = () => {
   const [curentPage, setCurrentPage] = useState('');
 
-  const  { formData,updateFormError,inputError} = useContext(FormContext)
+  const { formData, updateFormError, inputError } = useContext(FormContext);
+  const [inputData, setInputData] = useState(formData);
 
   const router = useRouter();
 
-  const handleFormSubmit = async() => {
-     await applicationSchema.validate(formData).then((data)=>{
-      }).catch((error)=>{
-        updateFormError({...error.params,message:error.message})
+  const response = client.mutate;
+
+  const CREATE_APPLICATION_MUTATION = gql`
+    mutation ($args: CreateApplicationInput!) {
+      rental {
+        createApplication(input: $args) {
+          id
+          createdAt
+          updatedAt
+        }
+      }
+    }
+  `;
+
+  const [createApplication, { loading, error, data }] = useMutation(
+    CREATE_APPLICATION_MUTATION,
+  );
+
+  const handleFormSubmit = async () => {
+    createApplication({
+      variables: {
+        args: formData,
+      },
+    })
+      .then(() => {
+        NotificationManager.success(
+          'Success message',
+          'Application Submitted sucessfully',
+        );
       })
+      .catch((error) => {
+        NotificationManager.success(
+          'Success message',
+          'Operation failed , please try again',
+        );
+        console.log(error);
+      });
   };
 
   const handleNavigate = async (type: string) => {
-
-    try{
-      const validate = await applicationSchema.validate(formData)
+    try {
       if (type === 'Back') {
-        router.push('/', undefined, { shallow: true });
+        router.push('/');
       }
       if (type === 'Cancel') {
-        router.push('/', undefined, { shallow: true });
+        router.push('/');
       }
 
-    }catch(error:any){
-      console.log({error})
+      if (type === 'Preview') {
+        console.log({ fn: { ...formData } });
+
+        await applicationSchema
+          .validate(inputData, { abortEarly: false })
+          .then((data) => {
+            router.push('/application-preview');
+          })
+          .catch((error) => {
+            console.log({ errors: error.inner });
+            const format = error.inner.map((error) => {
+              // console.log(error)
+              // console.log(error.params)
+              let newError = { ...error.params, message: error.message };
+              return newError;
+            });
+            updateFormError(format);
+          });
+      }
+    } catch (error: any) {
+      console.log({ error });
     }
-  
   };
 
   useEffect(() => {
     setCurrentPage(router.pathname);
-  }, [router.pathname]);
+    setInputData(formData);
+  }, [formData, router.pathname, setCurrentPage]);
 
-  const previewForm = async() => {
-    try{
-      const validate = await applicationSchema.validate(formData)
+  const previewForm = async () => {
+    try {
+      const validate = await applicationSchema.validate(formData);
       router.push('/application-preview', undefined, { shallow: true });
-    }catch(error){
-      console.log({error})
+    } catch (error) {
+      console.log({ error });
     }
-  
   };
 
   return (
@@ -72,28 +127,29 @@ export const FooterComponent = () => {
           />
         )}
 
-        {
-          curentPage === '/application-preview' ?(
+        {curentPage === '/application-preview' ? (
+          loading ? (
+            <FaSpinner />
+          ) : (
             <Button
-            onClick={handleFormSubmit}
-            color="ffff"
-            text="Submit"
-            width="200"
-            height="40"
-          />
-          ):(
-            <Button
-            onClick={handleFormSubmit}
+              onClick={handleFormSubmit}
+              color="ffff"
+              text="Submit"
+              width="200"
+              height="40"
+            />
+          )
+        ) : (
+          <Button
+            onClick={() => handleNavigate('Preview')}
             color="ffff"
             text="Review application"
             width="300"
             height="40"
           />
-
-          )
-        }
-
+        )}
       </ButtonContainer>
+      <NotificationContainer />
     </FooterContainer>
   );
 };

@@ -18,5 +18,6 @@ export interface SelectInterface {
     marginRight?: string;
     default?: string;
     name?: string;
-    onChange?: (data:any)=>void;
+    validationLabel?: string;
+    handleChange?: (data:any)=>void;
   }

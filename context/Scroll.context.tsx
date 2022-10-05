@@ -12,7 +12,7 @@ export function ScrollProvider({children}){
         window.addEventListener('scroll',(event)=>{
           setScrollHeight(window.scrollY)
         })
-      },[])
+      },[setScrollHeight])
 
 return(
     <ScrollContext.Provider value={{scrollHeight}}>

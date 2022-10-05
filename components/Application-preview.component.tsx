@@ -3,9 +3,9 @@ import { FormContext } from '../context';
 import { FormContainer, Container } from './Application.component';
 import styled from 'styled-components';
 import { FaPen } from 'react-icons/fa';
+import { FormDataInterface } from '../interface';
 
-export const ApplicationPreviewComponent = () => {
-  const { formData } = useContext(FormContext);
+export const ApplicationPreviewComponent = ({formData}) => {
   return (
     <Container>
       <FormContainer>
@@ -22,11 +22,11 @@ export const ApplicationPreviewComponent = () => {
 
             <DatailContainer>
               <DetailLabel>Applicant national id number</DetailLabel>
-              <DetailValue>{formData.nationalId}</DetailValue>
+              <DetailValue>{formData?.nationalId}</DetailValue>
             </DatailContainer>
             <DatailContainer>
               <DetailLabel>Applicant date of birth</DetailLabel>
-              <DetailValue>{formData.dateOfBirth}</DetailValue>
+              <DetailValue>{formData?.dateOfBirth}</DetailValue>
             </DatailContainer>
 
             <DatailContainer>
@@ -48,19 +48,18 @@ export const ApplicationPreviewComponent = () => {
             <DatailContainer>
               <DetailLabel>Emergency contact relationship</DetailLabel>
               <DetailValue>
-                {' '}
-                {formData?.emergencyContact.relationship}
+                {formData?.emergencyContact?.relationship}
               </DetailValue>
             </DatailContainer>
 
             <DetailGroup>
               <DatailContainer>
                 <DetailLabel>Emergency contact email</DetailLabel>
-                <DetailValue> {formData?.emergencyContact.email}</DetailValue>
+                <DetailValue> {formData?.emergencyContact?.email}</DetailValue>
               </DatailContainer>
               <DatailContainer>
                 <DetailLabel>Emergency contact phone</DetailLabel>
-                <DetailValue> {formData.emergencyContact.phone}</DetailValue>
+                <DetailValue> {formData?.emergencyContact?.phone}</DetailValue>
               </DatailContainer>
             </DetailGroup>
           </SectionContainer>
@@ -78,33 +77,39 @@ export const ApplicationPreviewComponent = () => {
             <DetailGroup>
               <DatailContainer>
                 <DetailLabel>Rental start date</DetailLabel>
-                <DetailValue>{formData.rentalHistory.startDate}</DetailValue>
+                <DetailValue>{formData?.rentalHistory?.startDate}</DetailValue>
               </DatailContainer>
               <DatailContainer>
                 <DetailLabel>Rental end date</DetailLabel>
-                <DetailValue>{formData.rentalHistory.endDate} </DetailValue>
+                <DetailValue>{formData?.rentalHistory?.endDate} </DetailValue>
               </DatailContainer>
             </DetailGroup>
             <DatailContainer>
               <DetailLabel>Monthly rent</DetailLabel>
-              <DetailValue>{formData.rentalHistory.rent}</DetailValue>
+              <DetailValue>{formData?.rentalHistory?.rent}</DetailValue>
             </DatailContainer>
             <DatailContainer>
               <DetailLabel>Reason for leaving</DetailLabel>
-              <DetailValue>{formData.rentalHistory.reasonForLeaving}</DetailValue>
+              <DetailValue>
+                {formData?.rentalHistory?.reasonForLeaving}
+              </DetailValue>
             </DatailContainer>
             <DatailContainer>
               <DetailLabel>Rental owner name</DetailLabel>
-              <DetailValue>{`${formData.rentalHistory?.rentalOwner?.firstName} ${formData.rentalHistory?.rentalOwner?.lastName}`}</DetailValue>
+              <DetailValue>{`${formData?.rentalHistory?.rentalOwner?.firstName} ${formData?.rentalHistory?.rentalOwner?.lastName}`}</DetailValue>
             </DatailContainer>
             <DetailGroup>
               <DatailContainer>
                 <DetailLabel>Rental owner phone number</DetailLabel>
-                <DetailValue>{formData.rentalHistory?.rentalOwner?.phone}</DetailValue>
+                <DetailValue>
+                  {formData?.rentalHistory?.rentalOwner?.phone}
+                </DetailValue>
               </DatailContainer>
               <DatailContainer>
                 <DetailLabel>Rental owner email</DetailLabel>
-                <DetailValue>{formData.rentalHistory?.rentalOwner?.email}</DetailValue>
+                <DetailValue>
+                  {formData?.rentalHistory?.rentalOwner?.email}
+                </DetailValue>
               </DatailContainer>
             </DetailGroup>
           </SectionContainer>
@@ -116,16 +121,22 @@ export const ApplicationPreviewComponent = () => {
             </DatailContainer>
             <DatailContainer>
               <DetailLabel>Employer name</DetailLabel>
-              <DetailValue>{formData?.employmentHistory?.employerName}</DetailValue>
+              <DetailValue>
+                {formData?.employmentHistory?.employerName}
+              </DetailValue>
             </DatailContainer>
             <DetailGroup>
               <DatailContainer>
                 <DetailLabel>Position held</DetailLabel>
-                <DetailValue>{formData.employmentHistory?.positionHeld}</DetailValue>
+                <DetailValue>
+                  {formData?.employmentHistory?.positionHeld}
+                </DetailValue>
               </DatailContainer>
               <DatailContainer>
                 <DetailLabel>Employer email</DetailLabel>
-                <DetailValue>{formData?.employmentHistory?.employerName}</DetailValue>
+                <DetailValue>
+                  {formData?.employmentHistory?.employerName}
+                </DetailValue>
               </DatailContainer>
             </DetailGroup>
           </SectionContainer>
@@ -148,7 +159,9 @@ export const ApplicationPreviewComponent = () => {
               </DetailValue>
             </DatailContainer>
             <DatailContainer>
-              <DetailLabel>{formData?.terms?.agreed?("True"):("False")}</DetailLabel>
+              <DetailLabel>
+                {formData?.terms?.agreed ? 'True' : 'False'}
+              </DetailLabel>
               <DetailValue>True</DetailValue>
             </DatailContainer>
             <DatailContainer>

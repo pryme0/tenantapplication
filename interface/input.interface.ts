@@ -19,6 +19,7 @@ export interface FormInputInterface{
     showDate?: boolean;
     name?: string;
     value?: string;
+    validationLabel?: string;
     error?:ErrorInterface;
     handleChange?: (event:any)=>void;
 }

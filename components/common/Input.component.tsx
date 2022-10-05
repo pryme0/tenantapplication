@@ -1,5 +1,5 @@
 import React, { useState,useContext, useEffect } from 'react';
-import { FormInputInterface } from '../../interface';
+import { ErrorInterface, FormInputInterface, InputErrorInterface } from '../../interface';
 import styled ,{ keyframes } from 'styled-components';
 import DatePicker from 'react-datepicker';
 import { FaCalendarAlt } from 'react-icons/fa';
@@ -26,8 +26,8 @@ export const InputComponent = (props: FormInputInterface) => {
   };
 
   useEffect(()=>{
-    setErrors(inputError)
-  },[inputError])
+    return setErrors(inputError);
+  },[errors, inputError])
 
   return (
     <Container
@@ -75,7 +75,13 @@ export const InputComponent = (props: FormInputInterface) => {
         </DatePickerContainer>
       )}
       <WarningTextContainer>
-      {errors?.path === props.name?(<WarningText>{errors?.message} *</WarningText>):(<WarningText></WarningText>)}
+        {
+          errors &&(
+              errors?.map((error)=>(
+                error?.path === props?.validationLabel?(<WarningText>{error?.message} </WarningText>):(<WarningText> </WarningText>)
+              ))
+          )
+        }
       </WarningTextContainer>
     </Container>
   );
@@ -227,15 +233,15 @@ const StyledDatePickerContainer = styled.div`
   }
 `;
 
-const WarningTextContainer = styled.div`
+export const WarningTextContainer = styled.div`
 display: flex;
 margin-top: 0px;
 padding-top:0px;
 margin-bottom: 10px;
-height: 20%;
+height: 50px;
 `;
 
-const WarningText = styled.h3`
+export const WarningText = styled.h3`
 font-size :12px;
 color: #8b1e1e;
 font-weight: 400;

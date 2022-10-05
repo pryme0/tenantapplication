@@ -4,19 +4,23 @@ import styled from 'styled-components';
 import { InputWrapper } from '../common';
 import { FormContext } from '../../context';
 import { ApplicationEmergencyContact } from '../../interface';
+import { inputChangeEvent } from '../../utils';
 
 
 export const EmergencyContactForm = () => {
 
   const { updateFormData, formData } = useContext(FormContext);
   const [ formInput, setFormInput ] = useState<ApplicationEmergencyContact>(formData.emergencyContact);
-  const handleChange = (e)=>{
-    setFormInput({ ...formInput, [e.target.name]: e.target.value });
-    updateFormData('emergencyContact', {
-      ...formInput,
-      [e.target.name]: e.target.value,
+
+  const onInputChange = (event) => {
+    inputChangeEvent({
+      event,
+      formInput,
+      setFormInput,
+      updateFormData,
+      baseField: 'emergencyContact',
     });
-  }
+  };
 
 
   return (
@@ -27,14 +31,14 @@ export const EmergencyContactForm = () => {
           placeholder="Firstname"
           label="Emergency contact name"
           marginRight='10'
-          handleChange={handleChange}
+          handleChange={onInputChange}
           value={formInput.firstName}
           name="firstName"
         />
           <InputComponent
           bordered
           placeholder="Lastname"
-          handleChange={handleChange}
+          handleChange={onInputChange}
           value={formInput.lastName}
           name="lastName"
         />
@@ -43,14 +47,14 @@ export const EmergencyContactForm = () => {
         <InputComponent
           bordered
           label="Emergency contact relationship"
-          handleChange={handleChange}
+          handleChange={onInputChange}
           value={formInput.relationship}
           name="relationship"
         />
       </InputWrapper>
       <InputWrapper>
         <InputComponent bordered label="Emergency contact email"
-         handleChange={handleChange}
+         handleChange={onInputChange}
          value={formInput.email}
          name="email"
         />
@@ -59,7 +63,7 @@ export const EmergencyContactForm = () => {
         <InputComponent
           bordered
           label="Emergency contact phone"
-          handleChange={handleChange}
+          handleChange={onInputChange}
           value={formInput.phone}
           name="phone"
         />

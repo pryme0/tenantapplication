@@ -1,8 +1,8 @@
 export const rentCycleData = [
-  { value: 'Daily', text: 'Daily' },
-  { value: 'Biweekly', text: 'Biweekly' },
-  { value: 'Weekly', text: 'Weekly' },
-  { value: 'Monthly', text: 'Monthly' },
-  { value: 'Biannualy', text: 'Biannualy' },
-  { value: 'yearly', text: 'Yearly' },
+  { name: 'DAILY', text: 'DAILY' },
+  { name: 'BIWEEKLY', text: 'BIWEEKLY' },
+  { name: 'WEEKLY', text: 'WEEKLY' },
+  { name: 'MONTHLY', text: 'MONTHLY' },
+  { name: 'BIANNUAL', text: 'BIANNUAL' },
+  { name: 'YEARLY', text: 'YEARLY' },
 ];

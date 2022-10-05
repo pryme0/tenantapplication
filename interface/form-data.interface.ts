@@ -1,21 +1,21 @@
 
 
 export enum RentCycle {
-    DAILY = 0,
+    DAILY =  "DAILY",
   
-    WEEKLY = 1,
+    WEEKLY = "WEEKLY",
   
-    MONTHLY = 2,
+    MONTHLY = "MONTHLY",
   
-    BIWEEKLY = 3,
+    BIWEEKLY = "BIWEEKLY",
   
-    BIMONTHLY = 4,
+    BIMONTHLY = "BIMONTHLY",
   
-    BIANNUAL = 5,
+    BIANNUAL = "BIANNUAL",
   
-    QUATERLY = 6,
+    QUATERLY = "QUATERLY",
   
-    YEARLY = 7,
+    YEARLY = "YEARLY",
   }
 
 
@@ -40,8 +40,6 @@ export interface AddressInput {
 
   city?: string;
 
-  postalCode?: string;
-
   zip?: string;
 
   line?: string;
@@ -63,7 +61,7 @@ export interface EmploymentHistoryInput {
 
 
 export interface ApplicationTermsInput {
-  agreed?: Boolean;
+  agreed: Boolean;
 
   agreedBy?: string;
 }
@@ -141,7 +139,7 @@ value?:  string;
 export interface FormContextInterface{
   formData:FormDataInterface;
   updateFormData: (key?: string,payload?: any) => void;
-  inputError?:InputErrorInterface;
+  inputError?:InputErrorInterface[];
   updateFormError(payload:any):void;
 }
 
@@ -154,11 +152,11 @@ export const defaultApplicationValues = {
   phone: '',
   nationalId: '',
   currentAddress: {
-    line1: '',
+    line: '',
     state: '',
     country: '',
     city:"",
-    postalCode:""
+    zip:""
   },
   rentalHistory: {
     reasonForLeaving: '',
@@ -167,11 +165,11 @@ export const defaultApplicationValues = {
     rentCycle: RentCycle.YEARLY,
     rent: '',
     rentalAddress:{
-      line1: '',
+      line: '',
       state: '',
       country: '',
       city:"",
-      postalCode:""
+      zip:""
     },
     rentalOwner: {
       firstName: '',
