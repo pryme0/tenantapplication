@@ -1,26 +1,22 @@
 import React, { useEffect, useState, useContext } from 'react';
 import styled from 'styled-components';
-import { Button } from './common';
+import { Button } from '@Component/index';
 import { gql, useMutation } from '@apollo/client';
 import { useRouter } from 'next/router';
-import { FormContext } from '../context';
-import { applicationSchema } from './validation.schema';
-import client from '../apollo-client';
-import { FaSpinner } from 'react-icons/fa';
+import { FormContext } from '@Context/index';
+import { applicationSchema } from '@Utils/index';
 import {
   NotificationContainer,
   NotificationManager,
 } from 'react-notifications';
 
 export const FooterComponent = () => {
+  const { formData, updateFormError } = useContext(FormContext);
   const [curentPage, setCurrentPage] = useState('');
-
-  const { formData, updateFormError, inputError } = useContext(FormContext);
+  const [unitId, setUnitId] = useState('');
   const [inputData, setInputData] = useState(formData);
 
   const router = useRouter();
-
-  const response = client.mutate;
 
   const CREATE_APPLICATION_MUTATION = gql`
     mutation ($args: CreateApplicationInput!) {
@@ -39,22 +35,17 @@ export const FooterComponent = () => {
   );
 
   const handleFormSubmit = async () => {
+    formData.unitId = unitId;
     createApplication({
       variables: {
         args: formData,
       },
     })
       .then(() => {
-        NotificationManager.success(
-          'Success message',
-          'Application Submitted sucessfully',
-        );
+        NotificationManager.success('Submitted sucessfully');
       })
       .catch((error) => {
-        NotificationManager.success(
-          'Success message',
-          'Operation failed , please try again',
-        );
+        NotificationManager.success('Operation failed');
         console.log(error);
       });
   };
@@ -62,25 +53,20 @@ export const FooterComponent = () => {
   const handleNavigate = async (type: string) => {
     try {
       if (type === 'Back') {
-        router.push('/');
+        router.push(`/application/${unitId}`);
       }
       if (type === 'Cancel') {
         router.push('/');
       }
 
       if (type === 'Preview') {
-        console.log({ fn: { ...formData } });
-
         await applicationSchema
           .validate(inputData, { abortEarly: false })
           .then((data) => {
-            router.push('/application-preview');
+            router.push(`/application/preview/${unitId}`);
           })
           .catch((error) => {
-            console.log({ errors: error.inner });
-            const format = error.inner.map((error) => {
-              // console.log(error)
-              // console.log(error.params)
+            const format = error.inner.map((error: any) => {
               let newError = { ...error.params, message: error.message };
               return newError;
             });
@@ -95,21 +81,15 @@ export const FooterComponent = () => {
   useEffect(() => {
     setCurrentPage(router.pathname);
     setInputData(formData);
-  }, [formData, router.pathname, setCurrentPage]);
-
-  const previewForm = async () => {
-    try {
-      const validate = await applicationSchema.validate(formData);
-      router.push('/application-preview', undefined, { shallow: true });
-    } catch (error) {
-      console.log({ error });
+    if (router.query.unitId) {
+      setUnitId(router.query.unitId?.toString());
     }
-  };
+  }, [formData, router.pathname, router.query.unitId, setCurrentPage]);
 
   return (
     <FooterContainer>
       <ButtonContainer>
-        {curentPage === '/application-preview' ? (
+        {curentPage === '/application/preview/[unitId]' ? (
           <Button
             onClick={() => handleNavigate('Back')}
             text="Back"
@@ -127,18 +107,15 @@ export const FooterComponent = () => {
           />
         )}
 
-        {curentPage === '/application-preview' ? (
-          loading ? (
-            <FaSpinner />
-          ) : (
-            <Button
-              onClick={handleFormSubmit}
-              color="ffff"
-              text="Submit"
-              width="200"
-              height="40"
-            />
-          )
+        {curentPage === '/application/preview/[unitId]' ? (
+          <Button
+            onClick={handleFormSubmit}
+            color="ffff"
+            text="Submit"
+            width="200"
+            height="40"
+            loading={loading}
+          />
         ) : (
           <Button
             onClick={() => handleNavigate('Preview')}

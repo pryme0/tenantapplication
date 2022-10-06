@@ -4,7 +4,7 @@ export const ScrollContext = createContext({
     scrollHeight: 0
 });
 
-export function ScrollProvider({children}){
+export function ScrollProvider({ children }: { children: JSX.Element[] }){
 
     const [scrollHeight, setScrollHeight] = useState(0)
 

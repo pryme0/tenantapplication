@@ -1,17 +1,21 @@
-import React, { useCallback, useContext, useEffect, useState } from 'react';
-import { HeaderComponent, InputComponent, Select } from '../common';
-import { InputWrapper } from '../common';
-import { FormContainer } from './EmergencyContact.component';
+import React, { useCallback, useContext, useState } from 'react';
 import { rentCycleData } from '../../data';
-import { SectionDemacator } from './EmergencyContact.component';
-import { CountryContext, FormContext } from '../../context';
-import { inputChangeEvent, onLocationChangeEvent } from '../../utils';
+import {
+  SectionDemacator,
+  FormContainer,
+  InputWrapper,
+  HeaderComponent,
+  InputComponent,
+  Select,
+} from '@Component/index';
+import { CountryContext, FormContext } from '@Context/index';
+import { inputChangeEvent, onLocationChangeEvent } from '@Utils/index';
 import _ from 'lodash';
 import {
   CountryInterface,
   StateInterface,
   RentalHistoryInput,
-} from '../../interface';
+} from '@Interface/index';
 
 export const RentalHistoryForm = () => {
   const { updateFormData, formData } = useContext(FormContext);
@@ -24,7 +28,7 @@ export const RentalHistoryForm = () => {
   const { countries, updateUserState, updateUserCities } =
     useContext(CountryContext);
   const onLocationChange = useCallback(
-    async (event) => {
+    async (event: any) => {
       inputChangeEvent({
         event,
         formInput,
@@ -45,7 +49,7 @@ export const RentalHistoryForm = () => {
     [country, formInput, updateFormData, updateUserCities, updateUserState],
   );
 
-  const onInputChange = (event) => {
+  const onInputChange = (event: any) => {
     inputChangeEvent({
       event,
       formInput,
@@ -54,10 +58,6 @@ export const RentalHistoryForm = () => {
       baseField: 'rentalHistory',
     });
   };
-
-  // useEffect(() => {
-  //   onLocationChange({ target: { name: 'country', value: 'Nigeria' } });
-  // }, [cities, onLocationChange, states]);
 
   return (
     <FormContainer>
@@ -85,7 +85,7 @@ export const RentalHistoryForm = () => {
         />
         <InputComponent
           handleChange={onInputChange}
-          value={formInput?.rentalAddress?.line}
+          value={formInput?.rentalAddress?.line2}
           bordered
           placeholder="Line2"
           name="rentalAddress.line2"
@@ -110,13 +110,13 @@ export const RentalHistoryForm = () => {
           options={cities}
         />
         <InputComponent
-        handleChange={onLocationChange}
-          name="rentalAddress.zip"
+          handleChange={onLocationChange}
+          name="rentalAddress.postalCode"
           width="20"
           bordered
-          placeholder="Zip code"
-          validationLabel="rentalHistory.rentalAddress.zip"
-          value={formInput?.rentalAddress?.zip}
+          placeholder="Postal code"
+          validationLabel="rentalHistory.rentalAddress.postalCode"
+          value={formInput?.rentalAddress?.postalCode}
         />
       </InputWrapper>
       <InputWrapper>

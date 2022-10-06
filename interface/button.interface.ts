@@ -9,4 +9,6 @@ export interface ButtonInterface{
     disabled?: boolean;
     width?: string;
     height?: string;
+    loading?: boolean
+    border?:string
 }

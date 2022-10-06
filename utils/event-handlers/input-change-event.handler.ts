@@ -1,8 +1,6 @@
-import React from 'react';
 import {
   changeEventInterface,
-  LocationChangeEventInterface,
-} from '../interface';
+} from '@Interface/index';
 import _ from 'lodash';
 
 export const inputChangeEvent = (payload: changeEventInterface) => {
@@ -28,19 +26,4 @@ export const inputChangeEvent = (payload: changeEventInterface) => {
  
 };
 
-export const onLocationChangeEvent = async (
-  payload: LocationChangeEventInterface,
-) => {
-  if (payload.event.target.name.includes('country')) {
-    payload.setCountry(payload.event.target.value);
-    const states = await payload.updateUserState(payload.event.target.value);
-    return payload.setStates(states);
-  }
-  if (payload.event.target.name.includes('state')) {
-    const cities = await payload.updateUserCities(
-      payload.country,
-      payload.event.target.value,
-    );
-    return payload.setCities(cities);
-  }
-};
+

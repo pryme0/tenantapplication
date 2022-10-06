@@ -40,7 +40,7 @@ export interface AddressInput {
 
   city?: string;
 
-  zip?: string;
+  postalCode?: string;
 
   line?: string;
 
@@ -60,7 +60,7 @@ export interface EmploymentHistoryInput {
 }
 
 
-export interface ApplicationTermsInput {
+export interface ApplicationTermsInterface {
   agreed: Boolean;
 
   agreedBy?: string;
@@ -86,7 +86,7 @@ export interface RentalHistoryInput {
 }
 
 
-export interface ApplicationEmergencyContact {
+export interface EmergencyContactInterface {
 
   firstName: string;
 
@@ -106,7 +106,7 @@ lastName: string;
 
 email: string;
 
-unit: string;
+unitId: string;
 
 dateOfBirth: string;
 
@@ -148,7 +148,7 @@ export const defaultApplicationValues = {
   lastName: '',
   email: '',
   dateOfBirth: '',
-  unit: '',
+  unitId: '632c517ab2cb27023db5a516',
   phone: '',
   nationalId: '',
   currentAddress: {
@@ -156,7 +156,7 @@ export const defaultApplicationValues = {
     state: '',
     country: '',
     city:"",
-    zip:""
+    postalCode:""
   },
   rentalHistory: {
     reasonForLeaving: '',
@@ -169,7 +169,7 @@ export const defaultApplicationValues = {
       state: '',
       country: '',
       city:"",
-      zip:""
+      postalCode:""
     },
     rentalOwner: {
       firstName: '',

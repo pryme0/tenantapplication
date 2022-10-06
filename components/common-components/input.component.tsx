@@ -1,10 +1,10 @@
-import React, { useState,useContext, useEffect } from 'react';
-import { ErrorInterface, FormInputInterface, InputErrorInterface } from '../../interface';
-import styled ,{ keyframes } from 'styled-components';
+import React, { useState, useContext, useEffect } from 'react';
+import { FormInputInterface } from '@Interface/index';
+import styled from 'styled-components';
 import DatePicker from 'react-datepicker';
 import { FaCalendarAlt } from 'react-icons/fa';
 import { format } from 'date-fns';
-import { FormContext} from '../../context';
+import { FormContext } from '@Context/index';
 
 import 'react-datepicker/dist/react-datepicker.css';
 
@@ -14,20 +14,22 @@ export const InputComponent = (props: FormInputInterface) => {
   const toggleDatePicker = () => {
     setShowDate(!showDate);
   };
-  const  { inputError} = useContext(FormContext)
+  const { inputError } = useContext(FormContext);
 
   const [errors, setErrors] = useState(inputError);
-  const handleDateChange = (e) => {
+  const handleDateChange = (e: any | any) => {
     setValue(format(e, 'dd/MM/yyyy'));
-    if(props.handleChange){
-    props.handleChange({target:{name:props.name,value:format(e, 'dd/MM/yyyy')}})
+    if (props.handleChange) {
+      props.handleChange({
+        target: { name: props.name, value: format(e, 'dd/MM/yyyy') },
+      });
     }
     setShowDate(false);
   };
 
-  useEffect(()=>{
+  useEffect(() => {
     return setErrors(inputError);
-  },[errors, inputError])
+  }, [errors, inputError]);
 
   return (
     <Container
@@ -61,7 +63,7 @@ export const InputComponent = (props: FormInputInterface) => {
           <StyledDatePickerContainer showDate={showDate}>
             {showDate && (
               <DatePicker
-              name={props.name}
+                name={props.name}
                 showTimeSelect={false}
                 dateFormat={'yyyy/QQQQ'}
                 dateFormatCalendar={'MMM yyyy'}
@@ -75,19 +77,20 @@ export const InputComponent = (props: FormInputInterface) => {
         </DatePickerContainer>
       )}
       <WarningTextContainer>
-        {
-          errors &&(
-              errors?.map((error)=>(
-                error?.path === props?.validationLabel?(<WarningText>{error?.message} </WarningText>):(<WarningText> </WarningText>)
-              ))
-          )
-        }
+        {errors &&
+          errors?.map((error) =>
+            error?.path === props?.validationLabel ? (
+              <WarningText key={`${Math.random()}`}>
+                {error?.message}
+              </WarningText>
+            ) : (
+              <WarningText key={`${Math.random()}`}> </WarningText>
+            ),
+          )}
       </WarningTextContainer>
     </Container>
   );
 };
-
-
 
 const InputGroup = styled.div`
   width: 100%;
@@ -123,7 +126,7 @@ const InputContainer = styled.div`
   padding: 0px 20px;
 `;
 
-export const Container = styled.div`
+const Container = styled.div`
   display: flex;
   flex-direction: column;
   position: relative;
@@ -151,7 +154,7 @@ const StyledInput = styled.input`
   background-clip: padding-box;
   background-color: #fff;
   border: 0px;
-  color: #191919;
+  color: #603c3c
   &:focus {
     outline: none;
   }
@@ -190,7 +193,8 @@ const CalenderIcon = styled(FaCalendarAlt)`
 
 const StyledDatePickerContainer = styled.div`
   width: 100%;
-  display: ${(props: {showDate: boolean}) => props.showDate ? `block` : 'none'};
+  display: ${(props: { showDate: boolean }) =>
+    props.showDate ? `block` : 'none'};
   transition: all 5s ease-out;
   .react-datepicker {
     width: 100%;
@@ -234,17 +238,23 @@ const StyledDatePickerContainer = styled.div`
 `;
 
 export const WarningTextContainer = styled.div`
-display: flex;
-margin-top: 0px;
-padding-top:0px;
-margin-bottom: 10px;
-height: 50px;
+  display: flex;
+  margin-top: 0px;
+  padding-top: 0px;
+  margin-bottom: 10px;
+  height: 20px;
+  @media (max-width: 970px) {
+    height: 30px;
+  }
 `;
 
 export const WarningText = styled.h3`
-font-size :12px;
-color: #8b1e1e;
-font-weight: 400;
-align-items:center;
-`
+  font-size: 12px;
+  color: #8b1e1e;
+  font-weight: 400;
+  align-items: center;
+  @media (max-width: 970px) {
+    font-size: 10px;
+  }
+`;
 export default InputComponent;

@@ -1,18 +1,19 @@
-import React, { useContext, useState, useEffect } from 'react';
-import { FormContext } from '../../context';
-import { inputChangeEvent } from '../../utils';
-import { HeaderComponent, InputComponent } from '../common';
-import { InputWrapper } from '../common';
-import { FormContainer } from './EmergencyContact.component';
-import { SectionDemacator } from './EmergencyContact.component';
+import React, { useContext, useState } from 'react';
+import { FormContext } from '@Context/index';
+import { inputChangeEvent } from '@Utils/index';
+import {
+  HeaderComponent,
+  InputComponent,
+  InputWrapper,
+  FormContainer,
+  SectionDemacator
+} from '@Component/index';
 
 export const EmploymentHistoryForm = () => {
   const { updateFormData, formData } = useContext(FormContext);
   const [formInput, setFormInput] = useState(formData.employmentHistory);
 
-
-  const onInputChange = (event) => {
-    console.log('change')
+  const onInputChange = (event: any) => {
     inputChangeEvent({
       event,
       formInput,

@@ -1,5 +1,4 @@
 /* eslint-disable @next/next/no-page-custom-font */
-import { useRef, useContext } from 'react';
 import Head from 'next/head';
 import { ProgressComponent } from '../components';
 import styled from 'styled-components';
@@ -11,16 +10,9 @@ import {
 import { FooterComponent } from '../components';
 import * as yup from 'yup';
 
-const Layout = ({ children }) => {
-  const pageRef = useRef();
-
+const Layout = ({ children }: { children: JSX.Element }) => {
   return (
     <PageContainer>
-      <Head>
-        <title>Casabee rental application</title>
-        <meta name="description" content="Casabe tenant application" />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
       <FormContextProvider>
         <CountryProvider>
           <ScrollProvider>
@@ -46,6 +38,7 @@ const PageContainer = styled.div`
   box-sizing: border-box;
   @media (max-width: 970px) {
     flex-direction: column;
+    padding-bottom: 40px;
   }
 `;
 

@@ -1,11 +1,15 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useContext, useState, useEffect, useCallback } from 'react';
-import { HeaderComponent, InputComponent, Select } from '../common';
+import React, { useContext, useState, useCallback } from 'react';
 import styled from 'styled-components';
-import { CountryContext, FormContext } from '../../context';
-import { InputWrapper } from '../common';
-import { StateInterface, CountryInterface } from '../../interface';
-import { inputChangeEvent, onLocationChangeEvent } from '../../utils';
+import { CountryContext, FormContext } from '@Context/index';
+import {
+  InputWrapper,
+  HeaderComponent,
+  InputComponent,
+  Select,
+} from '@Component/index';
+import { StateInterface, CountryInterface } from '@Interface/index';
+import { inputChangeEvent, onLocationChangeEvent } from '@Utils/index';
 import _ from 'lodash';
 
 export const PersonalInformationForm = () => {
@@ -18,7 +22,7 @@ export const PersonalInformationForm = () => {
   const { countries, updateUserState, updateUserCities } =
     useContext(CountryContext);
 
-  const onInputChange = (event) => {
+  const onInputChange = (event: any) => {
     inputChangeEvent({
       event,
       formInput,
@@ -29,7 +33,7 @@ export const PersonalInformationForm = () => {
   };
 
   const onLocationChange = useCallback(
-    async (event) => {
+    async (event: any) => {
       inputChangeEvent({
         event,
         formInput,
@@ -58,10 +62,6 @@ export const PersonalInformationForm = () => {
       updateUserState,
     ],
   );
-
-  // useEffect(() => {
-  //   onLocationChange({ target: { name: 'country', value: 'Nigeria' } });
-  // }, []);
 
   return (
     <Container>
@@ -133,14 +133,14 @@ export const PersonalInformationForm = () => {
             validationLabel="currentAddress.city"
           />
           <InputComponent
-            name="currentAddress.zip"
+            name="currentAddress.postalCode"
             bordered
-            placeholder="Zip code"
+            placeholder="PostalCode code"
             width="20"
             required
             handleChange={onInputChange}
-            validationLabel="currentAddress.zip"
-            value={formInput.currentAddress.zip}
+            validationLabel="currentAddress.postalCode"
+            value={formInput.currentAddress.postalCode}
           />
         </InputWrapper>
 

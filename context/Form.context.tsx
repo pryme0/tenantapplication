@@ -12,7 +12,7 @@ export const FormContext = createContext<FormContextInterface>({
   updateFormError: () => {},
 });
 
-export const FormContextProvider = ({ children }) => {
+export const FormContextProvider = ({ children }: { children: JSX.Element }) => {
   const [formData, setFormData] = useState<FormDataInterface>(
     defaultApplicationValues,
   );

@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import { ButtonInterface } from '../../interface';
+import { ButtonInterface } from '@Interface/index';
+import { FaSpinner } from 'react-icons/fa';
 
 export const Button = (props: ButtonInterface) => {
   return (
@@ -12,7 +13,7 @@ export const Button = (props: ButtonInterface) => {
       onClick={props.onClick}
       disabled={props.disabled}
     >
-      {props.text}{' '}
+    { props.loading?(<FaSpinner />):(props.text)}
     </StyledButton>
   );
 };

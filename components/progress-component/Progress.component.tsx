@@ -1,44 +1,23 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { ProgressInterface, CounterInterface } from '../interface';
+import { ProgressInterface } from '../../interface';
 import { FaChevronLeft } from 'react-icons/fa';
-import { ScrollContext } from '../context';
+import { useRouter } from 'next/router';
+import { ProgressList } from '@Component/index';
+import {ProgressSublistData} from '@Data/index'
 
 export const ProgressComponent = () => {
-  const { scrollHeight } = useContext(ScrollContext);
-  const [firstProgressStage, setFirstProgressStage] = useState(true);
-  const [secoundProgressStage, setSecoundProgressStage] = useState(false);
-  const [thirdProgressStage, setThirdProgressStage] = useState(false);
-  const [fourthProgressStage, setFourthProgressStage] = useState(false);
+  const [formStage, setFormStage] = useState(1);
+
+
+  const router = useRouter();
+
 
   useEffect(() => {
-    if (scrollHeight > 0 && scrollHeight <= 450) {
-      setFirstProgressStage(true);
-      setSecoundProgressStage(false);
-      setThirdProgressStage(false);
-      setFourthProgressStage(false);
+    if (router.pathname === '/application/preview/[unitId]') {
+      setFormStage(2);
     }
-    if (scrollHeight > 450 && scrollHeight <= 1300) {
-      setFirstProgressStage(false);
-      setSecoundProgressStage(true);
-      setThirdProgressStage(false);
-      setFourthProgressStage(false);
-    }
-
-    if (scrollHeight > 1300 && scrollHeight <= 1700) {
-      setFirstProgressStage(false);
-      setSecoundProgressStage(false);
-      setThirdProgressStage(true);
-      setFourthProgressStage(false);
-    }
-
-    if (scrollHeight >= 1700) {
-      setFirstProgressStage(false);
-      setSecoundProgressStage(false);
-      setThirdProgressStage(false);
-      setFourthProgressStage(true);
-    }
-  }, [scrollHeight]);
+  }, [router.isReady, router.pathname, router.query]);
 
   return (
     <ProgressBarContainer>
@@ -52,43 +31,23 @@ export const ProgressComponent = () => {
             <StepCounter active>1</StepCounter>
           </CounterContainer>
           <TitleContainer>
-            <Title active>Your information</Title>
+            <Title active={formStage >= 1}>Your information</Title>
           </TitleContainer>
         </StepHeadingContainer>
-        <StyledList>
-          <StyledListItem scrollHeight={firstProgressStage}>
-            Applicant information
-          </StyledListItem>
-          <StyledListItem scrollHeight={secoundProgressStage}>
-            Rental history
-          </StyledListItem>
-          <StyledListItem scrollHeight={thirdProgressStage}>
-            Employment history
-          </StyledListItem>
-          <StyledListItem scrollHeight={fourthProgressStage}>
-            Terms and condition
-          </StyledListItem>
-        </StyledList>
+        <ProgressList data={ProgressSublistData} />
         <StepHeadingContainer>
           <CounterContainer>
-            <StepCounter active={true}>2</StepCounter>
+            <StepCounter active={formStage >= 2}>2</StepCounter>
           </CounterContainer>
           <TitleContainer>
-            <Title active={true}>Review apllication</Title>
-          </TitleContainer>
-        </StepHeadingContainer>
-        <StepHeadingContainer>
-          <CounterContainer>
-            <StepCounter active={false}>3</StepCounter>
-          </CounterContainer>
-          <TitleContainer>
-            <Title active={false}>Complete</Title>
+            <Title active={true}>Review application</Title>
           </TitleContainer>
         </StepHeadingContainer>
       </ListContainer>
     </ProgressBarContainer>
   );
 };
+
 
 const HeadingContainer = styled.div`
   display: flex;
@@ -97,7 +56,7 @@ const HeadingContainer = styled.div`
 `;
 
 const HeadingTitle = styled.h3`
-  color: #DA636F;
+  color: #da636f;
   padding-left: 15px;
   font-weight: 550;
 `;
@@ -125,6 +84,7 @@ const Title = styled.h3`
   text-align: center;
   @media (max-width: 970px) {
     padding-top: 10px;
+    font-size: 10px;
   }
 `;
 
@@ -138,7 +98,7 @@ const StepHeadingContainer = styled.div`
 `;
 
 const ProgressBarContainer = styled.div`
-  color: #000000;
+  color: #603c3c;
   position: sticky;
   box-sizing: border-box;
   width: 100%;
@@ -207,38 +167,8 @@ const ListContainer = styled.div`
   }
 `;
 
-const StyledList = styled.ul`
-  list-style: none;
-  margin-left: 10px;
-  padding-left: 40px;
-  padding-top: 0px;
-  padding-bottom: 0px;
-  margin-top: 0px;
-  margin-bottom: 0px;
-  @media (max-width: 970px) {
-    display: none;
-    padding-left: 20px;
-    margin-left: 0px;
-  }
-`;
-
-const StyledListItem = styled.li`
-  font-weight: 500;
-  margin: 0px;
-  cursor: pointer;
-  color: #767676;
-  font-size: 12px;
-  font-weight: ${(props: { scrollHeight: boolean }) =>
-    props.scrollHeight ? '600' : '400'};
-  letter-spacing: 0.43px;
-  padding: 0px;
-  line-height: 20px;
-  font-family: Montserrat, arial, sans-serif;
-  transition: font-weight 0.5s ease-out;
-`;
-
 const StyledChevronLeft = styled(FaChevronLeft)`
-  color: #DA636F;
+  color: #da636f;
   font-weight: 200;
   font-size: 25px;
 `;
@@ -246,15 +176,15 @@ const StyledChevronLeft = styled(FaChevronLeft)`
 const StyledSpan = styled.span`
   width: 100%;
   height: 80%;
-  border-left: 1px solid #DA636F;
+  border-left: 1px solid #da636f;
   position: absolute;
   margin-left: 15px;
   @media (max-width: 970px) {
-    border-top: 1px solid #DA636F;
+    border-top: 1px solid #da636f;
     border-left: 0px;
     margin-left: 0px;
     margin-right: 0px;
-    width: 60%;
+    width: 30%;
     margin-top: 25px;
     margin-left: 20px;
   }

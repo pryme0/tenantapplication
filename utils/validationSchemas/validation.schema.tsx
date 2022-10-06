@@ -20,7 +20,7 @@ export const applicationSchema = yup.object({
   city: yup
     .string()
     .required('Current address city is required'),
-    zip: yup
+    postalCode: yup
       .string()
       .max(10, 'Characters must be at most 10'),
   }),
@@ -87,7 +87,7 @@ export const applicationSchema = yup.object({
       city: yup
         .string()
         .required('rental address city is required'),
-      zip: yup.string().min(4, 'Characters must be at least 4'),
+      postalCode: yup.string().min(4, 'Characters must be at least 4'),
     }),
     rentalOwner: yup.object({
       firstName: yup

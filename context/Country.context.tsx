@@ -15,7 +15,7 @@ export const CountryContext = createContext({
   },
 });
 
-export function CountryProvider({ children}) {
+export function CountryProvider({ children }: { children: JSX.Element }) {
   const [countries, setCountries] = useState([]);
 
   const updateUserState = async (

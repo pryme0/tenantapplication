@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import {
   PersonalInformationForm,
@@ -6,17 +6,15 @@ import {
   RentalHistoryForm,
   EmploymentHistoryForm,
   TermsComponent,
-} from './forms';
+} from '@Component/index';
 
 export interface ProgressBarProps {
   status: number;
 }
 
 export const ApplicationRequestForm = () => {
-  const [submit, setSubmit] = useState(false);
   const [formStep, setFormStep] = useState(1);
   const [progressBarStatus, setProgressBarStatus] = useState(25);
-  const [disableButton, setDisableButton] = useState(false);
 
   const next = () => {
     let newStep = formStep + 1;
@@ -28,41 +26,35 @@ export const ApplicationRequestForm = () => {
       newProgress = 100;
     }
     setFormStep(newStep);
-    setDisableButton(false);
     setProgressBarStatus(newProgress);
   };
 
-  useEffect(() => {
-    if (formStep <= 1) {
-      setDisableButton(true);
-    }
-  }, [formStep]);
 
   return (
     <Container>
-      <FormContainer>
+      <ApplicationFormsContainer>
         <PersonalInformationForm />
         <EmergencyContactForm />
         <RentalHistoryForm />
         <EmploymentHistoryForm />
         <ControlContainer></ControlContainer>
         <TermsComponent />
-      </FormContainer>
+      </ApplicationFormsContainer>
     </Container>
   );
 };
 
 export const Container = styled.div`
   display: flex;
-  color: #000000;
+  color: #603c3c;
   width: 100%;
   height: 100%;
 `;
 
-export const FormContainer = styled.div`
+export const ApplicationFormsContainer = styled.div`
   position: relative;
   width: 100%;
-  font-family: Monterassat;
+  font-family: Montserrat;
   display: flex;
   justify-content: center;
   flex-direction: column;
@@ -90,21 +82,4 @@ const ControlContainer = styled.div`
     flex-direction: column;
     align-items: center;
   }
-`;
-
-const TermsAndConditionsContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  @media (max-width: 950px) {
-    display: flex;
-    justify-content: center;
-  }
-`;
-
-const TermsText = styled.h3`
-  font-family: Montserrat, arial, sans-serif;
-  font-weight: 400;
-  font-size: 13px;
-  line-height: 16px;
-  color: #191919;
 `;

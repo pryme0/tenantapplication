@@ -1,25 +1,29 @@
-import React, { useContext } from 'react';
-import { FormContext } from '../context';
-import { FormContainer, Container } from './Application.component';
+import React from 'react';
 import styled from 'styled-components';
 import { FaPen } from 'react-icons/fa';
-import { FormDataInterface } from '../interface';
+import { FormDataInterface } from '@Interface/index';
+import {
+  PreviewDetailHeader,
+  ApplicationFormsContainer,
+  Container,
+} from '@Component/index';
 
-export const ApplicationPreviewComponent = ({formData}) => {
+export const ApplicationPreviewComponent = ({
+  formData,
+}: {
+  formData: FormDataInterface;
+}) => {
   return (
     <Container>
-      <FormContainer>
+      <ApplicationFormsContainer>
         <ContentContainer>
           <HeaderContainer></HeaderContainer>
           <SectionContainer>
             <DatailContainer>
-              <DetailHeader>
-                <HeaderText>Applicant information</HeaderText> <PenIcon />
-              </DetailHeader>
+              <PreviewDetailHeader text="Applicant information" />
               <DetailLabel>Applicant name</DetailLabel>
               <DetailValue>{`${formData?.firstName} ${formData?.lastName}`}</DetailValue>
             </DatailContainer>
-
             <DatailContainer>
               <DetailLabel>Applicant national id number</DetailLabel>
               <DetailValue>{formData?.nationalId}</DetailValue>
@@ -65,9 +69,7 @@ export const ApplicationPreviewComponent = ({formData}) => {
           </SectionContainer>
           <SectionContainer>
             <DatailContainer>
-              <DetailHeader>
-                <HeaderText>Rental history</HeaderText> <PenIcon />
-              </DetailHeader>
+              <PreviewDetailHeader text="Rental history" />
             </DatailContainer>
 
             <DatailContainer>
@@ -115,9 +117,7 @@ export const ApplicationPreviewComponent = ({formData}) => {
           </SectionContainer>
           <SectionContainer>
             <DatailContainer>
-              <DetailHeader>
-                <HeaderText>Employment</HeaderText> <PenIcon />
-              </DetailHeader>
+              <PreviewDetailHeader text="Employment" />
             </DatailContainer>
             <DatailContainer>
               <DetailLabel>Employer name</DetailLabel>
@@ -142,11 +142,9 @@ export const ApplicationPreviewComponent = ({formData}) => {
           </SectionContainer>
           <SectionContainer>
             <DatailContainer>
-              <DetailHeader>
-                <HeaderText>Terms and conditions</HeaderText> <PenIcon />
-              </DetailHeader>
+              <PreviewDetailHeader text="Terms and conditions" />
             </DatailContainer>
-            <DatailContainer>
+            <DatailContainer width="100">
               <DetailValue>
                 I understand that this is a routine application to establish
                 credit, character, employment, and rental history. I also
@@ -178,7 +176,7 @@ export const ApplicationPreviewComponent = ({formData}) => {
             </DetailValue>
           </SummaryContainer>
         </ContentContainer>
-      </FormContainer>
+      </ApplicationFormsContainer>
     </Container>
   );
 };
@@ -204,6 +202,7 @@ const ContentContainer = styled.div`
 const DatailContainer = styled.div`
   display: flex;
   flex-direction: column;
+  width: ${(props: { width?: string }) => (props.width ? props.width : 50)}%;
 `;
 const DetailHeader = styled.div`
   display: flex;
@@ -211,29 +210,22 @@ const DetailHeader = styled.div`
 `;
 
 const DetailLabel = styled.h3`
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 600;
   color: #767676;
   margin: 10px 0px;
 `;
 
-const HeaderText = styled.h3`
-  font-size: 16px;
-  margin: 10px 0px;
-  font-weight: 600;
-  color: #a54d56;
-`;
-
 const DetailValue = styled.h3`
-  font-size: 12px;
-  font-weight: 400;
+  font-size: 14px;
+  font-weight: 500;
   margin-top: 2px;
-  color: #191919;
+  color: #603c3c;
 `;
 const DetailGroup = styled.div`
   display: flex;
   justify-content: space-between;
-  width: 70%;
+  width: 80%;
   flex-wrap: wrap;
 `;
 

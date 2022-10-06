@@ -1,5 +1,5 @@
 import React from 'react';
-import { HeaderInterface } from '../../interface';
+import { HeaderInterface } from '@Interface/index';
 import styled from 'styled-components';
 
 export const HeaderComponent = (props: HeaderInterface) => {
@@ -17,7 +17,7 @@ const HeaderContainer = styled.div`
   margin-bottom: 15px;
   font-family: Montserrat, arial, sans-serif, sans-serif;
   box-sizing: border-box;
-  color: #191919;
+  color: #DA636F;
   > h3{
     font-size: 16px;
     line-height: 22px;
