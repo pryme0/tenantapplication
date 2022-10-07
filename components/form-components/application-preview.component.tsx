@@ -207,10 +207,6 @@ const DatailContainer = styled.div`
   flex-direction: column;
   width: ${(props: { width?: string }) => (props.width ? props.width : 50)}%;
 `;
-const DetailHeader = styled.div`
-  display: flex;
-  align-items: center;
-`;
 
 const DetailLabel = styled.h3`
   font-size: 14px;
