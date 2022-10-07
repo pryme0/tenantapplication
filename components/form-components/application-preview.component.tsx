@@ -197,6 +197,9 @@ const ContentContainer = styled.div`
   display: flex;
   padding: 40px 40px;
   flex-direction: column;
+  @media (max-width: 970px) {
+    padding: 40px 0px;
+  }
 `;
 
 const DatailContainer = styled.div`

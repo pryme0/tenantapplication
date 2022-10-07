@@ -65,7 +65,7 @@ export const ApplicationFormsContainer = styled.div`
   background-color: #ffff;
   box-shadow: 0px 0px 2px 2px rgba(0, 0, 0, 0.04);
   @media (max-width: 970px) {
-    padding: 0px 30px;
+    padding: 0px 20px;
     margin-bottom: 0px;
     box-shadow: 0px 0px 0px 0px;
   }
