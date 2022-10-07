@@ -206,6 +206,9 @@ const DatailContainer = styled.div`
   display: flex;
   flex-direction: column;
   width: ${(props: { width?: string }) => (props.width ? props.width : 50)}%;
+  @media (max-width: 970px) {
+    width: 100%;
+  }
 `;
 
 const DetailLabel = styled.h3`
