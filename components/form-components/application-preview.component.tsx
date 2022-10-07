@@ -170,7 +170,7 @@ export const ApplicationPreviewComponent = ({
           <SummaryContainer>
             <DetailValue>
               By submitting this application I am giving
-              buildit.managebuilding.com permission to run a background check on
+              casbee.com permission to run a background check on
               myself and any cosigners, and agreeing to the site Privacy Policy
               and Terms of Service
             </DetailValue>
