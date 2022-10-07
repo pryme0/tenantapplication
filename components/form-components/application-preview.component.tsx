@@ -234,9 +234,3 @@ const SummaryContainer = styled.div`
   margin-bottom: 20px;
 `;
 
-const PenIcon = styled(FaPen)`
-  font-size: 12px;
-  margin-left: 10px;
-  color: #73b680;
-  cursor: pointer;
-`;
