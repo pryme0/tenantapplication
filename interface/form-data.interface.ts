@@ -116,13 +116,13 @@ currentAddress: AddressInput;
 
 phone: string;
 
-emergencyContact: ApplicationEmergencyContact;
+emergencyContact: EmergencyContactInterface;
 
 rentalHistory: RentalHistoryInput;
 
 employmentHistory: EmploymentHistoryInput;
 
-terms: ApplicationTermsInput;
+terms: ApplicationTermsInterface;
 
 }
 

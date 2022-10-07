@@ -46,6 +46,7 @@ export const FooterComponent = () => {
       })
       .catch((error) => {
         NotificationManager.success('Operation failed');
+        // eslint-disable-next-line no-console
         console.log(error);
       });
   };
@@ -74,6 +75,7 @@ export const FooterComponent = () => {
           });
       }
     } catch (error: any) {
+      // eslint-disable-next-line no-console
       console.log({ error });
     }
   };
