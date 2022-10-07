@@ -154,10 +154,10 @@ const StyledInput = styled.input`
   background-clip: padding-box;
   background-color: #fff;
   border: 0px;
-  color: #603c3c
+  color: #603c3c;
   &:focus {
     outline: none;
-  }
+}
 `;
 
 export const StyledLabel = styled.label`

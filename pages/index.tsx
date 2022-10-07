@@ -9,22 +9,21 @@ import Layout from './layout';
 
 const Home: NextPage = () => {
   const handleClick=()=>{
-
-    console.log('index page')
   }
 
   return (
       <IndexConatiner>
-
-      <Button
+        <ButtonContainer>
+        <Button
             onClick={() => handleClick()}
             text="Apply"
-            width="500"
+            width="400"
             height="50"
-            background="#9d7b7b"
+            background="7e2929"
             color='ffff'
           />
 
+        </ButtonContainer>
       </IndexConatiner>
   );
 };
@@ -32,11 +31,13 @@ const Home: NextPage = () => {
 
 const IndexConatiner = styled.div`
 display: flex;
-margin-top: auto;
-margin-bottom:auto;
 height: 100vh ;
 justify-content:center;
 `
+const ButtonContainer = styled.div`
+display: flex;
+align-items: center;
+`;
 
 
 export default Home;
